@@ -932,4 +932,65 @@
           <th><span class="en">Region</span><span class="zh" style="display:none">区域</span></th>
           <th><span class="en">Timeline</span><span class="zh" style="display:none">时间线</span></th>
           <th><span class="en">Contract Size</span><span class="zh" style="display:none">合同规模</span></th>
-          <th><span class="en">First Move</span><span class="zh" style="display:none">首要�
+          <th><span class="en">First Move</span><span class="zh" style="display:none">首要行动</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Stargate (Oracle/OpenAI)</strong></td><td>USA 🇺🇸</td><td><span class="en">Immediate</span><span class="zh" style="display:none">立即</span></td><td>$500M–2B</td><td class="en">Oracle Infra + SB Energy</td><td class="zh" style="display:none">Oracle基础设施 + SB Energy</td></tr>
+        <tr><td><strong>Amazon AWS</strong></td><td>USA 🇺🇸</td><td><span class="en">Q2 2025</span><span class="zh" style="display:none">2025年Q2</span></td><td>$200M–1B</td><td class="en">AWS Clean Energy team</td><td class="zh" style="display:none">AWS清洁能源团队</td></tr>
+        <tr><td><strong>Microsoft Azure</strong></td><td>Global 🌍</td><td><span class="en">Q3 2025</span><span class="zh" style="display:none">2025年Q3</span></td><td>$300M–1.5B</td><td class="en">Azure Sustainability Office</td><td class="zh" style="display:none">Azure可持续发展办</td></tr>
+        <tr><td><strong>G42 / NEOM</strong></td><td>UAE/KSA 🇦🇪</td><td><span class="en">Q2 2025</span><span class="zh" style="display:none">2025年Q2</span></td><td>$100M–500M</td><td class="en">G42 Energy Division</td><td class="zh" style="display:none">G42能源部门</td></tr>
+        <tr><td><strong>Crusoe Energy</strong></td><td>USA 🇺🇸</td><td><span class="en">Immediate</span><span class="zh" style="display:none">立即</span></td><td>$50M–200M</td><td class="en">Crusoe Ops team</td><td class="zh" style="display:none">Crusoe运营团队</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('.en').forEach(el=>el.style.display=lang==='en'?'':'none');
+  document.querySelectorAll('.zh').forEach(el=>el.style.display=lang==='zh'?'':'none');
+  document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  document.getElementById('btn-zh').classList.toggle('active',lang==='zh');
+}
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// Region Filter (Global tab)
+function filterRegion(region) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.querySelectorAll('[data-region]').forEach(el => {
+    el.style.display = (region === 'all' || el.dataset.region === region) ? '' : 'none';
+  });
+}
+</script>
+
+</div><!-- /main-content -->
+
+<script>
+var ndaLang='en';
+function toggleNdaLang(){
+  ndaLang=ndaLang==='en'?'cn':'en';
+  document.getElementById('ndaEN').style.display=ndaLang==='en'?'':'none';
+  document.getElementById('ndaCN').style.display=ndaLang==='cn'?'':'none';
+  document.getElementById('ndaLangBtn').textContent=ndaLang==='en'?'中文':'EN';
+  document.getElementById('ndaTitle').textContent=ndaLang==='en'?'Confidentiality Agreement':'保密协议';
+}
+function acceptNda(){
+  if(!document.getElementById('ndaCheck').checked)return;
+  document.getElementById('ndaGate').classList.add('hidden');
+  document.getElementById('mainContent').classList.add('unlocked');
+}
+function declineNda(){
+  document.documentElement.innerHTML='<head><meta charset="UTF-8"><title>Access Declined</title><style>body{font-family:system-ui;background:#0a1628;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;}.box{max-width:480px;}h1{color:#60a5fa;margin-bottom:12px;}p{color:#7b8ca8;line-height:1.6;}</style></head><body><div class="box"><h1>Access Declined / 已拒绝访问</h1><p>You have declined the confidentiality terms. Please close this page.<br><br>您已拒绝保密条款。请关闭本页面。</p></div></body>';
+}
+</script>
+
+</body>
+</html>
