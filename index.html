@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henderson Transpacific LLC — Marketing Research: BESS+Solar Global Demand</title>
+<style>
+  :root {
+    --primary: #0f172a;
+    --primary-light: #1e293b;
+    --accent: #f59e0b;
+    --accent-dark: #d97706;
+    --green: #10b981;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --purple: #8b5cf6;
+    --cyan: #06b6d4;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #334155;
+    --text-light: #94a3b8;
+    --border: #e2e8f0;
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height:1.6; }
+
+  /* Top Nav */
+  .top-bar { background: var(--primary); color:#fff; padding: 0 24px; display:flex; align-items:center; justify-content:space-between; height:60px; position:sticky; top:0; z-index:100; }
+  .top-bar h1 { font-size:18px; font-weight:700; letter-spacing:.5px; }
+  .top-bar h1 span { color: var(--accent); }
+  .lang-toggle { display:flex; gap:4px; }
+  .lang-toggle button { background:transparent; border:1px solid rgba(255,255,255,.3); color:#fff; padding:6px 14px; border-radius:6px; cursor:pointer; font-size:13px; transition:.2s; }
+  .lang-toggle button.active { background: var(--accent); border-color: var(--accent); color: var(--primary); font-weight:600; }
+  .lang-toggle button:hover { border-color: var(--accent); }
+
+  /* Tabs */
+  .tab-bar { background: var(--primary-light); display:flex; padding: 0 24px; gap:2px; overflow-x:auto; }
+  .tab-btn { background:transparent; border:none; color: var(--text-light); padding:14px 22px; cursor:pointer; font-size:14px; font-weight:500; white-space:nowrap; border-bottom:3px solid transparent; transition:.2s; }
+  .tab-btn:hover { color:#fff; }
+  .tab-btn.active { color:#fff; border-bottom-color: var(--accent); }
+
+  /* Content */
+  .content { max-width:1400px; margin:0 auto; padding:24px; }
+  .tab-panel { display:none; }
+  .tab-panel.active { display:block; }
+
+  /* KPI Cards */
+  .kpi-row { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin-bottom:28px; }
+  .kpi { background: var(--card); border-radius:12px; padding:20px; box-shadow: var(--shadow); border-left:4px solid var(--accent); }
+  .kpi .label { font-size:12px; text-transform:uppercase; letter-spacing:.8px; color: var(--text-light); margin-bottom:4px; }
+  .kpi .value { font-size:28px; font-weight:800; color: var(--primary); }
+  .kpi .sub { font-size:12px; color: var(--green); margin-top:2px; }
+
+  /* Section Card */
+  .section { background: var(--card); border-radius:12px; padding:28px; box-shadow: var(--shadow); margin-bottom:20px; }
+  .section h2 { font-size:20px; font-weight:700; color: var(--primary); margin-bottom:16px; border-bottom:2px solid var(--border); padding-bottom:10px; }
+  .section h3 { font-size:16px; font-weight:600; color: var(--primary); margin:18px 0 8px; }
+
+  /* Tables */
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead { background: var(--primary); color:#fff; }
+  th { padding:12px 14px; text-align:left; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.5px; }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); }
+  tbody tr:hover { background:#f1f5f9; }
+
+  /* Priority badges */
+  .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:600; }
+  .badge-fire { background:#fef3c7; color:#92400e; }
+  .badge-star { background:#dbeafe; color:#1e40af; }
+  .badge-med { background:#e0e7ff; color:#4338ca; }
+  .badge-high { background:#d1fae5; color:#065f46; }
+
+  /* Region Cards */
+  .region-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(340px,1fr)); gap:16px; margin-top:16px; }
+  .region-card { background: var(--card); border-radius:12px; padding:22px; box-shadow: var(--shadow); border-top:4px solid var(--accent); transition:.2s; }
+  .region-card:hover { box-shadow: var(--shadow-lg); transform:translateY(-2px); }
+  .region-card .flag { font-size:28px; margin-bottom:6px; }
+  .region-card h3 { font-size:16px; font-weight:700; color: var(--primary); margin-bottom:4px; }
+  .region-card .meta { font-size:12px; color: var(--text-light); margin-bottom:10px; }
+  .region-card p { font-size:13px; margin-bottom:8px; }
+
+  /* Company entries */
+  .company-entry { background: var(--bg); border-radius:10px; padding:18px 20px; margin-bottom:12px; border-left:4px solid var(--blue); }
+  .company-entry.tier1 { border-left-color: var(--accent); }
+  .company-entry.tier2 { border-left-color: var(--green); }
+  .company-entry.tier3 { border-left-color: var(--purple); }
+  .company-entry h4 { font-size:15px; font-weight:700; color: var(--primary); margin-bottom:4px; }
+  .company-entry .detail { font-size:13px; color: var(--text); margin-bottom:4px; }
+  .company-entry .highlight { color: var(--accent-dark); font-weight:700; }
+
+  /* Phase Timeline */
+  .timeline { display:flex; gap:16px; margin-top:16px; flex-wrap:wrap; }
+  .phase-card { flex:1; min-width:250px; background: var(--card); border-radius:12px; padding:20px; box-shadow: var(--shadow); position:relative; overflow:hidden; }
+  .phase-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+  .phase-card.p1::before { background: var(--red); }
+  .phase-card.p2::before { background: var(--accent); }
+  .phase-card.p3::before { background: var(--blue); }
+  .phase-card h4 { font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:10px; }
+  .phase-card.p1 h4 { color: var(--red); }
+  .phase-card.p2 h4 { color: var(--accent-dark); }
+  .phase-card.p3 h4 { color: var(--blue); }
+  .phase-card ul { list-style:none; padding:0; }
+  .phase-card li { font-size:13px; padding:4px 0; padding-left:16px; position:relative; }
+  .phase-card li::before { content:''; position:absolute; left:0; top:10px; width:8px; height:8px; border-radius:50%; }
+  .phase-card.p1 li::before { background: var(--red); }
+  .phase-card.p2 li::before { background: var(--accent); }
+  .phase-card.p3 li::before { background: var(--blue); }
+
+  /* Filter controls */
+  .filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+  .filter-btn { background: var(--card); border:1px solid var(--border); border-radius:8px; padding:6px 16px; font-size:13px; cursor:pointer; transition:.2s; }
+  .filter-btn.active, .filter-btn:hover { background: var(--accent); color: var(--primary); border-color: var(--accent); font-weight:600; }
+
+  /* Responsive */
+  @media (max-width:768px) {
+    .kpi-row { grid-template-columns: repeat(2,1fr); }
+    .region-grid { grid-template-columns:1fr; }
+    .timeline { flex-direction:column; }
+    .tab-btn { padding:12px 14px; font-size:13px; }
+  }
+
+  /* Print */
+  @media print { .top-bar, .tab-bar, .lang-toggle, .filter-bar { display:none; } .tab-panel { display:block !important; page-break-before:always; } }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <h1><span>Henderson Transpacific LLC</span> &mdash; <span class="en">Marketing Research: BESS+Solar Global Demand</span><span class="zh" style="display:none">市场研究：BESS+光伏全球需求</span></h1>
+  <div class="lang-toggle">
+    <button id="btn-en" class="active" onclick="setLang('en')">English</button>
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+  </div>
+</div>
+
+<!-- Tab Bar -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="openTab('company')">
+    <span class="en">Company Profile</span><span class="zh" style="display:none">公司简介</span>
+  </button>
+  <button class="tab-btn" onclick="openTab('overview')">
+    <span class="en">Overview</span><span class="zh" style="display:none">概览</span>
+  </button>
+  <button class="tab-btn" onclick="openTab('research')">
+    <span class="en">Research</span><span class="zh" style="display:none">研究</span>
+  </button>
+  <button class="tab-btn" onclick="openTab('usa')">
+    <span class="en">USA Targets</span><span class="zh" style="display:none">美国目标</span>
+  </button>
+  <button class="tab-btn" onclick="openTab('global')">
+    <span class="en">Global Targets</span><span class="zh" style="display:none">全球目标</span>
+  </button>
+  <button class="tab-btn" onclick="openTab('strategy')">
+    <span class="en">Strategy</span><span class="zh" style="display:none">战略</span>
+  </button>
+</div>
+
+<!-- ===================== COMPANY PROFILE TAB ===================== -->
+<div class="content">
+<div id="tab-company" class="tab-panel active">
+
+  <!-- Company Header -->
+  <div class="section" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border-radius:12px;">
+    <div style="text-align:center;padding:20px 0">
+      <div style="font-size:32px;font-weight:800;letter-spacing:1px;margin-bottom:4px"><span style="color:var(--accent)">Henderson</span> Transpacific LLC</div>
+      <div style="font-size:16px;color:var(--accent);font-weight:500;margin-bottom:12px">
+        <span class="en">BESS + Solar Energy Solutions Provider</span>
+        <span class="zh" style="display:none">BESS+光伏能源解决方案提供商</span>
+      </div>
+      <div style="font-size:15px;opacity:.85;max-width:700px;margin:0 auto">
+        <span class="en">Transpacific energy solutions — connecting cutting-edge BESS + Solar technology with the world's fastest-growing AI data center markets.</span>
+        <span class="zh" style="display:none">跨太平洋能源解决方案 — 将尖端BESS+光伏技术与全球增长最快的AI数据中心市场相连接。</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company Overview -->
+  <div class="section">
+    <h2><span class="en">Company Overview</span><span class="zh" style="display:none">公司概况</span></h2>
+    <p class="en">Henderson Transpacific LLC is a transpacific energy solutions provider specializing in Battery Energy Storage Systems (BESS) and solar power systems for AI data center infrastructure. The company bridges Asian manufacturing scale with Western project delivery standards, serving markets across the United States, Asia-Pacific, the Middle East, Europe, and beyond.</p>
+    <p class="zh" style="display:none">Henderson Transpacific LLC是一家跨太平洋能源解决方案提供商，专注于为AI数据中心基础设施提供电池储能系统（BESS）和光伏发电系统。公司将亚洲制造规模与西方项目交付标准相结合，服务覆盖美国、亚太、中东、欧洲及全球各地市场。</p>
+
+    <div class="kpi-row" style="margin-top:20px">
+      <div class="kpi" style="border-left-color:var(--accent)">
+        <div class="label"><span class="en">Business Model</span><span class="zh" style="display:none">商业模式</span></div>
+        <div class="value" style="font-size:18px"><span class="en">Energy Solutions</span><span class="zh" style="display:none">能源解决方案</span></div>
+        <div class="sub"><span class="en">BESS + Solar + Consulting</span><span class="zh" style="display:none">BESS+光伏+咨询</span></div>
+      </div>
+      <div class="kpi" style="border-left-color:var(--blue)">
+        <div class="label"><span class="en">Geographic Focus</span><span class="zh" style="display:none">地域重点</span></div>
+        <div class="value" style="font-size:18px"><span class="en">Transpacific</span><span class="zh" style="display:none">跨太平洋</span></div>
+        <div class="sub"><span class="en">US + Asia + ME + EU</span><span class="zh" style="display:none">美国+亚洲+中东+欧盟</span></div>
+      </div>
+      <div class="kpi" style="border-left-color:var(--green)">
+        <div class="label"><span class="en">Target Sector</span><span class="zh" style="display:none">目标行业</span></div>
+        <div class="value" style="font-size:18px"><span class="en">AI Data Centers</span><span class="zh" style="display:none">AI数据中心</span></div>
+        <div class="sub"><span class="en">Mission-critical infrastructure</span><span class="zh" style="display:none">关键任务基础设施</span></div>
+      </div>
+      <div class="kpi" style="border-left-color:var(--purple)">
+        <div class="label"><span class="en">Operations</span><span class="zh" style="display:none">运营</span></div>
+        <div class="value" style="font-size:18px"><span class="en">Bilingual</span><span class="zh" style="display:none">双语</span></div>
+        <div class="sub"><span class="en">English + Chinese</span><span class="zh" style="display:none">中英双语</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solutions Portfolio -->
+  <div class="section">
+    <h2><span class="en">Solutions Portfolio</span><span class="zh" style="display:none">解决方案组合</span></h2>
+    <div class="region-grid">
+      <div class="region-card">
+        <div class="flag">&#9889;</div>
+        <h3><span class="en">BESS — Battery Energy Storage Systems</span><span class="zh" style="display:none">BESS — 电池储能系统</span></h3>
+        <p class="en">Utility-scale and behind-the-meter LFP battery storage. Standardized, factory-built containerized blocks for rapid deployment. MV and HV configurations from 50 MW to multi-GW scale. Grid bypass, peak shaving, frequency regulation, and 24/7 solar dispatch.</p>
+        <p class="zh" style="display:none">公用事业级和表后LFP电池储能。标准化工厂预制集装箱模块，快速部署。50 MW至多GW规模的中压和高压配置。绕网供电、削峰填谷、频率调节和24/7光伏调度。</p>
+      </div>
+      <div class="region-card">
+        <div class="flag">&#9728;&#65039;</div>
+        <h3><span class="en">Solar Power Systems</span><span class="zh" style="display:none">光伏发电系统</span></h3>
+        <p class="en">Ground-mount and rooftop arrays from 10 MW to GW scale. Optimized for data center co-location with maximum energy density. Paired with BESS for round-the-clock dispatchable clean power. Compatible with PPA, lease, and ownership structures.</p>
+        <p class="zh" style="display:none">10 MW至GW级地面和屋顶光伏阵列。针对数据中心共址优化，实现最大能量密度。与BESS配对实现全天候可调度清洁电力。兼容PPA、租赁和直接所有权结构。</p>
+      </div>
+      <div class="region-card">
+        <div class="flag">&#128297;</div>
+        <h3><span class="en">Turnkey EPC & Integration</span><span class="zh" style="display:none">交钥匙EPC与系统集成</span></h3>
+        <p class="en">Full engineering, procurement, and construction. Seamless integration with data center electrical infrastructure (MV/HV switchgear, transformers, UPS). Project management from design through commissioning with O&M support.</p>
+        <p class="zh" style="display:none">完整的工程、采购和施工服务。与数据中心电气基础设施（中压/高压开关柜、变压器、UPS）无缝集成。从设计到调试的全程项目管理及运维支持。</p>
+      </div>
+      <div class="region-card">
+        <div class="flag">&#127758;</div>
+        <h3><span class="en">Consulting & Market Advisory</span><span class="zh" style="display:none">咨询与市场顾问</span></h3>
+        <p class="en">Energy procurement strategy for AI data center operators. Regulatory navigation across US, EU, Middle East, and APAC. Site selection, grid interconnection advisory, PPA structuring and financial modeling.</p>
+        <p class="zh" style="display:none">面向AI数据中心运营商的能源采购战略。美国、欧盟、中东和亚太地区的监管指导。选址、电网接入咨询、PPA结构设计和财务建模。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Competitive Positioning -->
+  <div class="section">
+    <h2><span class="en">Competitive Positioning</span><span class="zh" style="display:none">竞争定位</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span class="en">Factor</span><span class="zh" style="display:none">因素</span></th>
+          <th><span class="en">Henderson Transpacific</span></th>
+          <th><span class="en">Typical Competitor</span><span class="zh" style="display:none">典型竞争对手</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong><span class="en">Geographic Reach</span><span class="zh" style="display:none">地域覆盖</span></strong></td><td><span class="badge badge-fire"><span class="en">Transpacific — US + Asia + ME + EU</span><span class="zh" style="display:none">跨太平洋 — 美国+亚洲+中东+欧盟</span></span></td><td><span class="en">Single region</span><span class="zh" style="display:none">单一区域</span></td></tr>
+        <tr><td><strong><span class="en">Supply Chain</span><span class="zh" style="display:none">供应链</span></strong></td><td><span class="badge badge-fire"><span class="en">Dual-source: Asian scale + Western QA</span><span class="zh" style="display:none">双源：亚洲规模+西方品控</span></span></td><td><span class="en">Single-source, higher cost</span><span class="zh" style="display:none">单一来源，成本更高</span></td></tr>
+        <tr><td><strong><span class="en">Cost Advantage</span><span class="zh" style="display:none">成本优势</span></strong></td><td><span class="badge badge-star">15–25%</span></td><td><span class="en">Baseline pricing</span><span class="zh" style="display:none">基准定价</span></td></tr>
+        <tr><td><strong><span class="en">Deployment Speed</span><span class="zh" style="display:none">部署速度</span></strong></td><td><span class="badge badge-fire"><span class="en">Weeks (containerized, pre-tested)</span><span class="zh" style="display:none">数周（集装箱化，预测试）</span></span></td><td><span class="en">Months (custom engineering)</span><span class="zh" style="display:none">数月（定制工程）</span></td></tr>
+        <tr><td><strong><span class="en">AI DC Specialization</span><span class="zh" style="display:none">AI数据中心专业化</span></strong></td><td><span class="badge badge-fire"><span class="en">Purpose-built for AI workloads</span><span class="zh" style="display:none">专为AI工作负载设计</span></span></td><td><span class="en">Generic utility-scale</span><span class="zh" style="display:none">通用公用事业级</span></td></tr>
+        <tr><td><strong><span class="en">Bilingual Operations</span><span class="zh" style="display:none">双语运营</span></strong></td><td><span class="badge badge-star"><span class="en">English + Chinese</span><span class="zh" style="display:none">中英双语</span></span></td><td><span class="en">Single language</span><span class="zh" style="display:none">单一语言</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Report Purpose -->
+  <div class="section">
+    <h2><span class="en">About This Report</span><span class="zh" style="display:none">关于本报告</span></h2>
+    <p class="en">This marketing research report is produced by Henderson Transpacific LLC to map the global AI data center market demand for BESS + Solar energy solutions. It covers potential client identification, regional market analysis, procurement trends, regulatory landscape, and go-to-market strategy across the United States, Middle East, Europe, India, Asia-Pacific, Canada, and Australia (excluding China). All data is sourced from public industry reports as of April 2026.</p>
+    <p class="zh" style="display:none">本市场研究报告由Henderson Transpacific LLC编制，旨在描绘全球AI数据中心市场对BESS+光伏能源解决方案的需求。涵盖潜在客户识别、区域市场分析、采购趋势、监管环境以及覆盖美国、中东、欧洲、印度、亚太、加拿大和澳大利亚（不含中国）的市场进入战略。所有数据来源于2026年4月的公开行业报告。</p>
+    <p style="font-size:13px;color:var(--text-light);margin-top:8px"><span class="en">Contact: ronaldhhenderson@gmail.com</span><span class="zh" style="display:none">联系方式：ronaldhhenderson@gmail.com</span></p>
+  </div>
+</div>
+
+<!-- ===================== OVERVIEW TAB ===================== -->
+<div id="tab-overview" class="tab-panel">
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="label"><span class="en">Global AI DC Capex 2026</span><span class="zh" style="display:none">2026全球AI数据中心资本支出</span></div>
+      <div class="value">$700B</div>
+      <div class="sub">+75% YoY</div>
+    </div>
+    <div class="kpi">
+      <div class="label"><span class="en">BESS Market (AI DC) 2030</span><span class="zh" style="display:none">2030年AI数据中心储能市场</span></div>
+      <div class="value">$4.1–6B</div>
+      <div class="sub">28–38% CAGR</div>
+    </div>
+    <div class="kpi">
+      <div class="label"><span class="en">Hyperscaler BESS Opportunity</span><span class="zh" style="display:none">超大规模储能机会</span></div>
+      <div class="value">20 GW</div>
+      <div class="sub"><span class="en">Through 2035 (Jefferies)</span><span class="zh" style="display:none">至2035年 (Jefferies)</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label"><span class="en">US BESS Installed (2025)</span><span class="zh" style="display:none">2025年美国已装机储能</span></div>
+      <div class="value">28 GW</div>
+      <div class="sub">57 GWh (Record)</div>
+    </div>
+    <div class="kpi">
+      <div class="label"><span class="en">World Largest Solar+BESS</span><span class="zh" style="display:none">全球最大光储项目</span></div>
+      <div class="value">19 GWh</div>
+      <div class="sub"><span class="en">UAE: 5.2 GW Solar</span><span class="zh" style="display:none">阿联酋：5.2 GW光伏</span></div>
+    </div>
+    <div class="kpi">
+      <div class="label"><span class="en">AI DC Tracked Globally</span><span class="zh" style="display:none">全球AI数据中心追踪</span></div>
+      <div class="value">344</div>
+      <div class="sub"><span class="en">In 64 countries</span><span class="zh" style="display:none">覆盖64个国家</span></div>
+    </div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="section">
+    <h2><span class="en">Executive Summary</span><span class="zh" style="display:none">执行摘要</span></h2>
+    <p class="en">The global AI data center buildout is the single largest infrastructure investment cycle in history. Power is the #1 bottleneck in every region, and BESS + Solar is rapidly becoming the preferred on-site clean energy solution. This master strategic plan identifies the top potential client targets across the USA, Middle East, Europe, India, Asia-Pacific, Canada, and Australia for BESS + Solar system sales. The combined addressable market exceeds <strong>50 GW</strong> of BESS + Solar capacity across all tracked projects.</p>
+    <p class="zh" style="display:none">全球AI数据中心建设是人类历史上最大规模的基础设施投资周期。电力是各地区的首要瓶颈，BESS+光伏正迅速成为首选的现场清洁能源解决方案。本总体战略规划确定了美国、中东、欧洲、印度、亚太、加拿大和澳大利亚的BESS+光伏系统潜在客户目标。所有追踪项目的总可触达市场超过<strong>50 GW</strong>的BESS+光伏容量。</p>
+  </div>
+
+  <!-- Regional Heatmap -->
+  <div class="section">
+    <h2><span class="en">Regional Opportunity Heatmap</span><span class="zh" style="display:none">区域机会热力图</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span class="en">Region</span><span class="zh" style="display:none">区域</span></th>
+          <th><span class="en">Key Driver</span><span class="zh" style="display:none">关键驱动</span></th>
+          <th><span class="en">Est. BESS+Solar Capacity</span><span class="zh" style="display:none">预估储能+光伏容量</span></th>
+          <th><span class="en">Readiness</span><span class="zh" style="display:none">就绪度</span></th>
+          <th><span class="en">Priority</span><span class="zh" style="display:none">优先级</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>USA 🇺🇸</td><td>Stargate, Project Rainier, hyperscale boom</td><td>10–20 GW</td><td><span class="badge badge-fire">Active Procurement</span></td><td><span class="badge badge-fire">Highest</span></td></tr>
+        <tr><td>UAE / Saudi 🇦🇪🇸🇦</td><td>5 GW G42 campus, 19 GWh BESS, NEOM</td><td>5–10 GW</td><td><span class="badge badge-fire">Deploying Now</span></td><td><span class="badge badge-fire">Highest</span></td></tr>
+        <tr><td>India 🇮🇳</td><td>Adani $100B, Google $15B, MSFT $17.5B</td><td>3–8 GW</td><td><span class="badge badge-star">Scaling</span></td><td><span class="badge badge-star">Very High</span></td></tr>
+        <tr><td>Europe 🇪🇺</td><td>EU mandate PUE 1.2, Ireland 800MW wind</td><td>2–5 GW</td><td><span class="badge badge-star">Growing Fast</span></td><td><span class="badge badge-star">Very High</span></td></tr>
+        <tr><td>Australia 🇦🇺</td><td>3.67 GW NSW pipeline, govt mandate</td><td>1–3 GW</td><td><span class="badge badge-high">Growing</span></td><td><span class="badge badge-high">High</span></td></tr>
+        <tr><td>Japan 🇯🇵</td><td>Govt relocation to wind/nuclear sites</td><td>0.5–2 GW</td><td><span class="badge badge-high">Emerging</span></td><td><span class="badge badge-high">High</span></td></tr>
+        <tr><td>Canada 🇨🇦</td><td>Alberta 10 GW queue, grid bypass</td><td>0.5–2 GW</td><td><span class="badge badge-high">Growing</span></td><td><span class="badge badge-high">High</span></td></tr>
+        <tr><td>South Korea 🇰🇷</td><td>Samsung 1.5 GW, nuclear supplement</td><td>0.3–1 GW</td><td><span class="badge badge-med">Emerging</span></td><td><span class="badge badge-med">Medium</span></td></tr>
+        <tr><td>Singapore 🇸🇬</td><td>Grid constraint, green-only permits</td><td>0.1–0.5 GW</td><td><span class="badge badge-med">Selective</span></td><td><span class="badge badge-med">Medium</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== RESEARCH TAB ===================== -->
+<div id="tab-research" class="tab-panel">
+  <div class="section">
+    <h2><span class="en">Research — Market Intelligence Dashboard</span><span class="zh" style="display:none">研究 — 市场情报仪表板</span></h2>
+    <p class="en" style="margin-bottom:18px;">Consolidated research findings from AI data center energy procurement across all global markets. Data sourced from SEIA, DOE, IEA, Bloomberg NEF, Data Center Dynamics, Energy Storage News, and industry analyst reports (April 2026).</p>
+    <p class="zh" style="display:none;margin-bottom:18px;">整合全球AI数据中心能源采购的研究成果。数据来源包括SEIA、DOE、IEA、彭博新能源财经、Data Center Dynamics、Energy Storage News及行业分析报告（2026年4月）。</p>
+  </div>
+
+  <!-- Research: Key Market Stats -->
+  <div class="kpi-row">
+    <div class="kpi" style="border-left-color:#ef4444">
+      <div class="label"><span class="en">Hyperscaler 2026 Capex</span><span class="zh" style="display:none">超大规模2026资本支出</span></div>
+      <div class="value">~$700B</div>
+      <div class="sub">Amazon $200B, Alphabet $180B, Meta $135B, MSFT $80B+</div>
+    </div>
+    <div class="kpi" style="border-left-color:#3b82f6">
+      <div class="label"><span class="en">Hybrid Solar+BESS Deals (2025)</span><span class="zh" style="display:none">2025年光储混合交易</span></div>
+      <div class="value">~6 GW</div>
+      <div class="sub"><span class="en">Bloomberg NEF tracked</span><span class="zh" style="display:none">彭博新能源追踪</span></div>
+    </div>
+    <div class="kpi" style="border-left-color:#10b981">
+      <div class="label"><span class="en">On-site Power Data Centers</span><span class="zh" style="display:none">自备电源数据中心</span></div>
+      <div class="value">~33%</div>
+      <div class="sub"><span class="en">+22% in 6 months</span><span class="zh" style="display:none">6个月增长22%</span></div>
+    </div>
+    <div class="kpi" style="border-left-color:#8b5cf6">
+      <div class="label"><span class="en">LFP Battery Share in BESS</span><span class="zh" style="display:none">LFP电池在储能中占比</span></div>
+      <div class="value">73%</div>
+      <div class="sub"><span class="en">New data center installations</span><span class="zh" style="display:none">新数据中心装机</span></div>
+    </div>
+  </div>
+
+  <!-- Research: Procurement Trends -->
+  <div class="section">
+    <h2><span class="en">Key Procurement Trends</span><span class="zh" style="display:none">关键采购趋势</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span class="en">Trend</span><span class="zh" style="display:none">趋势</span></th>
+          <th><span class="en">Description</span><span class="zh" style="display:none">描述</span></th>
+          <th><span class="en">Implication for BESS+Solar</span><span class="zh" style="display:none">对BESS+光伏的影响</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><span class="en">Grid Bypass</span><span class="zh" style="display:none">绕网供电</span></strong></td>
+          <td class="en">18–36 month utility interconnection queues in USA; similar in Europe/Australia</td>
+          <td class="zh" style="display:none">美国电网接入排队18-36个月；欧洲/澳大利亚类似</td>
+          <td class="en">On-site solar+BESS enables operations to begin sooner. #1 value prop.</td>
+          <td class="zh" style="display:none">现场光储使运营更早启动。第一价值主张。</td>
+        </tr>
+        <tr>
+          <td><strong><span class="en">Behind-the-Meter</span><span class="zh" style="display:none">表后电源</span></strong></td>
+          <td class="en">Data centers co-locating with solar/wind farms; physical green power delivery</td>
+          <td class="zh" style="display:none">数据中心与光伏/风电场共址；物理绿色电力交付</td>
+          <td class="en">Google/Intersect Power model becoming standard. Turnkey bundles preferred.</td>
+          <td class="zh" style="display:none">Google/Intersect Power模式成为标准。倾向于交钥匙解决方案。</td>
+        </tr>
+        <tr>
+          <td><strong><span class="en">PPA Evolution</span><span class="zh" style="display:none">PPA演进</span></strong></td>
+          <td class="en">PPAs evolving into complex risk-sharing structures; physical delivery > paper offtake</td>
+          <td class="zh" style="display:none">PPA发展为复杂风险共担结构；实际交付 > 纸面购电</td>
+          <td class="en">BESS required to guarantee 24/7 dispatch from intermittent solar. Premium value.</td>
+          <td class="zh" style="display:none">BESS确保间歇性光伏24/7调度。溢价空间大。</td>
+        </tr>
+        <tr>
+          <td><strong><span class="en">Standardized BESS</span><span class="zh" style="display:none">标准化BESS</span></strong></td>
+          <td class="en">Market shifted to factory-built standardized blocks; faster deployment, lower cost</td>
+          <td class="zh" style="display:none">市场转向工厂预制标准化模块；部署更快、成本更低</td>
+          <td class="en">Scale manufacturing and containerized solutions win. Speed = competitive edge.</td>
+          <td class="zh" style="display:none">规模化生产和集装箱化方案获胜。速度=竞争优势。</td>
+        </tr>
+        <tr>
+          <td><strong><span class="en">DOE Federal RFPs</span><span class="zh" style="display:none">美国能源部联邦招标</span></strong></td>
+          <td class="en">DOE converting federal land into AI data center + clean energy hubs (Savannah River, Paducah, Portsmouth)</td>
+          <td class="zh" style="display:none">DOE将联邦土地转化为AI数据中心+清洁能源枢纽（萨凡纳河、帕杜卡、朴茨茅斯）</td>
+          <td class="en">Government-backed projects = secure revenue. Co-located solar+BESS is preferred.</td>
+          <td class="zh" style="display:none">政府支持项目=可靠收入。共址光储为首选。</td>
+        </tr>
+        <tr>
+          <td><strong><span class="en">Gulf Sovereign AI</span><span class="zh" style="display:none">海湾主权AI</span></strong></td>
+          <td class="en">UAE and Saudi Arabia mandating 100% renewable AI campuses (G42, NEOM, DataVolt)</td>
+          <td class="zh" style="display:none">阿联酋和沙特要求AI园区100%使用可再生能源（G42、NEOM、DataVolt）</td>
+          <td class="en">BESS is mandatory for 24/7 solar dispatch in desert climate. No alternative.</td>
+          <td class="zh" style="display:none">沙漠气候下BESS是24/7光伏调度的必需品。别无选择。</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Research: Major Deals Tracked -->
+  <div class="section">
+    <h2><span class="en">Major Deals & Partnerships Tracked (2025–2026)</span><span class="zh" style="display:none">追踪的重大交易与合作（2025–2026）</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span class="en">Deal</span><span class="zh" style="display:none">交易</span></th>
+          <th><span class="en">Parties</span><span class="zh" style="display:none">当事方</span></th>
+          <th><span class="en">Scale</span><span class="zh" style="display:none">规模</span></th>
+          <th><span class="en">Region</span><span class="zh" style="display:none">区域</span></th>
+          <th><span class="en">BESS Relevance</span><span class="zh" style="display:none">储能相关性</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>World's Largest Solar+BESS</td><td>UAE Government</td><td>5.2 GW Solar + 19 GWh BESS</td><td>UAE 🇦🇪</td><td><span class="badge badge-fire">Direct</span></td></tr>
+        <tr><td>Brookfield Renewable Deal</td><td>Microsoft + Brookfield</td><td>10.5 GW clean power (2026–2030)</td><td>Global</td><td><span class="badge badge-fire">Follow-on BESS</span></td></tr>
+        <tr><td>Qcells Solar</td><td>Microsoft + Qcells</td><td>12 GW solar</td><td>USA 🇺🇸</td><td><span class="badge badge-fire">BESS pairing needed</span></td></tr>
+        <tr><td>Form Energy / Crusoe</td><td>Form Energy + Crusoe</td><td>12 GWh BESS (long-duration)</td><td>USA 🇺🇸</td><td><span class="badge badge-fire">Direct BESS</span></td></tr>
+        <tr><td>TotalEnergies / Google</td><td>TotalEnergies + Google</td><td>1 GW Solar (Texas PPAs)</td><td>USA 🇺🇸</td><td><span class="badge badge-star">BESS pairing needed</span></td></tr>
+        <tr><td>Michigan BESS Portfolio</td><td>Oracle / Stargate</td><td>1.3 GW BESS approved</td><td>USA 🇺🇸</td><td><span class="badge badge-fire">Direct BESS</span></td></tr>
+        <tr><td>G42 UAE-US AI Campus</td><td>G42, OpenAI, NVIDIA, Oracle, SoftBank</td><td>5 GW campus</td><td>UAE 🇦🇪</td><td><span class="badge badge-fire">Massive BESS need</span></td></tr>
+        <tr><td>Stargate Expansion</td><td>OpenAI + Oracle + SoftBank</td><td>7 GW, 9+ sites, $400B</td><td>USA 🇺🇸</td><td><span class="badge badge-fire">Multi-site BESS</span></td></tr>
+        <tr><td>NEOM DataVolt</td><td>NEOM + DataVolt</td><td>$5B net-zero AI campus</td><td>Saudi 🇸🇦</td><td><span class="badge badge-fire">100% renewable BESS</span></td></tr>
+        <tr><td>Adani Green DC</td><td>Adani + Google + MSFT</td><td>5 GW, $100B by 2035</td><td>India 🇮🇳</td><td><span class="badge badge-fire">Multi-GWh BESS</span></td></tr>
+        <tr><td>Ireland Green Energy Park</td><td>Echelon Data Centers</td><td>800 MW offshore wind + DC</td><td>Ireland 🇮🇪</td><td><span class="badge badge-star">BESS integration</span></td></tr>
+        <tr><td>AWS Spain</td><td>Amazon</td><td>€33.7B investment</td><td>Spain 🇪🇸</td><td><span class="badge badge-star">Solar+BESS in solar belt</span></td></tr>
+        <tr><td>Google Finland</td><td>Google</td><td>$670M Hamina expansion</td><td>Finland 🇫🇮</td><td><span class="badge badge-high">BESS for grid balance</span></td></tr>
+        <tr><td>MSFT Sweden Zero-Carbon</td><td>Microsoft + Vattenfall</td><td>Zero-carbon campus</td><td>Sweden 🇸🇪</td><td><span class="badge badge-star">BESS mandate</span></td></tr>
+        <tr><td>NSW Data Center Pipeline</td><td>Various operators</td><td>3.67 GW capacity</td><td>Australia 🇦🇺</td><td><span class="badge badge-star">Govt sustainability req</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Research: Electricity Cost Comparison -->
+  <div class="section">
+    <h2><span class="en">Regional Electricity Cost Comparison</span><span class="zh" style="display:none">各区域电价对比</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span class="en">Region</span><span class="zh" style="display:none">区域</span></th>
+          <th><span class="en">Industrial Rate ($/kWh)</span><span class="zh" style="display:none">工业电价（$/kWh）</span></th>
+          <th><span class="en">Solar LCOE</span><span class="zh" style="display:none">光伏LCOE</span></th>
+          <th><span class="en">BESS Arbitrage Value</span><span class="zh" style="display:none">储能套利价值</span></th>
+          <th><span class="en">Key Factor</span><span class="zh" style="display:none">关键因素</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>USA (Texas/ERCOT)</td><td>$0.083</td><td><span class="en">Very Low</span><span class="zh" style="display:none">非常低</span></td><td><span class="badge badge-fire"><span class="en">Very High</span><span class="zh" style="display:none">非常高</span></span></td><td><span class="en">Grid volatility; price spikes</span><span class="zh" style="display:none">电网波动；价格尖峰</span></td></tr>
+        <tr><td>UK</td><td>$0.20+</td><td><span class="en">Moderate</span><span class="zh" style="display:none">中等</span></td><td><span class="badge badge-fire"><span class="en">Very High</span><span class="zh" style="display:none">非常高</span></span></td><td><span class="en">Europe's highest industrial rate</span><span class="zh" style="display:none">欧洲最高工业电价</span></td></tr>
+        <tr><td>Germany</td><td>$0.15–0.18</td><td><span class="en">Moderate</span><span class="zh" style="display:none">中等</span></td><td><span class="badge badge-star"><span class="en">High</span><span class="zh" style="display:none">高</span></span></td><td><span class="en">PUE 1.2 mandate from 2026</span><span class="zh" style="display:none">2026年起PUE 1.2强制要求</span></td></tr>
+        <tr><td>UAE</td><td>$0.074</td><td><span class="en">Very Low</span><span class="zh" style="display:none">非常低</span></td><td><span class="badge badge-star"><span class="en">High</span><span class="zh" style="display:none">高</span></span></td><td><span class="en">Best solar irradiance; BESS mandatory</span><span class="zh" style="display:none">最佳光照；BESS为必需</span></td></tr>
+        <tr><td>Saudi Arabia</td><td>$0.048</td><td><span class="en">Lowest globally</span><span class="zh" style="display:none">全球最低</span></td><td><span class="badge badge-high"><span class="en">Moderate</span><span class="zh" style="display:none">中等</span></span></td><td><span class="en">100% RE mandate (NEOM)</span><span class="zh" style="display:none">100%可再生能源要求（NEOM）</span></td></tr>
+        <tr><td>India</td><td>$0.07–0.10</td><td><span class="en">Very Low</span><span class="zh" style="display:none">非常低</span></td><td><span class="badge badge-star"><span class="en">High</span><span class="zh" style="display:none">高</span></span></td><td><span class="en">500 GW RE target by 2030</span><span class="zh" style="display:none">2030年500 GW可再生能源目标</span></td></tr>
+        <tr><td>Japan</td><td>$0.19</td><td><span class="en">Moderate</span><span class="zh" style="display:none">中等</span></td><td><span class="badge badge-fire"><span class="en">Very High</span><span class="zh" style="display:none">非常高</span></span></td><td><span class="en">Grid fragile post-Fukushima</span><span class="zh" style="display:none">福岛后电网脆弱</span></td></tr>
+        <tr><td>Nordics (SE/FI/NO)</td><td>$0.04–0.06</td><td><span class="en">Limited (low irradiance)</span><span class="zh" style="display:none">有限（低光照）</span></td><td><span class="badge badge-med"><span class="en">Low</span><span class="zh" style="display:none">低</span></span></td><td><span class="en">Cheap hydro; BESS for grid balance</span><span class="zh" style="display:none">低价水电；BESS用于电网平衡</span></td></tr>
+        <tr><td>Australia</td><td>$0.08–0.12</td><td><span class="en">Very Low</span><span class="zh" style="display:none">非常低</span></td><td><span class="badge badge-star"><span class="en">High</span><span class="zh" style="display:none">高</span></span></td><td><span class="en">Excellent solar; govt mandate</span><span class="zh" style="display:none">极佳光照；政府强制要求</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Research: Value Proposition by Region -->
+  <div class="section">
+    <h2><span class="en">BESS + Solar Value Proposition by Region</span><span class="zh" style="display:none">各区域BESS+光伏价值主张</span></h2>
+    <div class="region-grid">
+      <div class="region-card" style="border-top-color:#ef4444">
+        <div class="flag">🇺🇸</div>
+        <h3><span class="en">USA</span><span class="zh" style="display:none">美国</span></h3>
+        <p class="en"><strong>#1:</strong> Grid bypass (18–36mo queues)<br><strong>#2:</strong> 24/7 solar dispatch<br><strong>#3:</strong> ERCOT price arbitrage (Texas)</p>
+        <p class="zh" style="display:none"><strong>#1:</strong> 绕网供电（排队18-36个月）<br><strong>#2:</strong> 24/7光伏调度<br><strong>#3:</strong> ERCOT价格套利（德州）</p>
+      </div>
+      <div class="region-card" style="border-top-color:#f59e0b">
+        <div class="flag">🇦🇪🇸🇦</div>
+        <h3><span class="en">Middle East</span><span class="zh" style="display:none">中东</span></h3>
+        <p class="en"><strong>#1:</strong> World-class solar irradiance<br><strong>#2:</strong> Regulatory green mandate<br><strong>#3:</strong> Cheapest solar LCOE globally</p>
+        <p class="zh" style="display:none"><strong>#1:</strong> 世界级光照资源<br><strong>#2:</strong> 监管绿色要求<br><strong>#3:</strong> 全球最低光伏LCOE</p>
+      </div>
+      <div class="region-card" style="border-top-color:#3b82f6">
+        <div class="flag">🇪🇺</div>
+        <h3><span class="en">Europe</span><span class="zh" style="display:none">欧洲</span></h3>
+        <p class="en"><strong>#1:</strong> EU energy efficiency compliance<br><strong>#2:</strong> High electricity cost arbitrage (UK, DE)<br><strong>#3:</strong> Grid ancillary revenues</p>
+        <p class="zh" style="display:none"><strong>#1:</strong> EU能效合规<br><strong>#2:</strong> 高电价套利（英国、德国）<br><strong>#3:</strong> 电网辅助服务收入</p>
+      </div>
+      <div class="region-card" style="border-top-color:#10b981">
+        <div class="flag">🇮🇳</div>
+        <h3><span class="en">India</span><span class="zh" style="display:none">印度</span></h3>
+        <p class="en"><strong>#1:</strong> $0.05–0.07/kWh solar LCOE<br><strong>#2:</strong> Green campus permits<br><strong>#3:</strong> 500 GW RE target by 2030</p>
+        <p class="zh" style="display:none"><strong>#1:</strong> $0.05-0.07/kWh光伏LCOE<br><strong>#2:</strong> 绿色园区许可<br><strong>#3:</strong> 2030年500 GW可再生能源目标</p>
+      </div>
+      <div class="region-card" style="border-top-color:#8b5cf6">
+        <div class="flag">🇯🇵🇰🇷🇸🇬</div>
+        <h3><span class="en">Asia-Pacific</span><span class="zh" style="display:none">亚太</span></h3>
+        <p class="en"><strong>#1:</strong> Grid resilience (JP fragile grid)<br><strong>#2:</strong> High elec cost arbitrage (JP: $0.19)<br><strong>#3:</strong> Green permit requirement (SG)</p>
+        <p class="zh" style="display:none"><strong>#1:</strong> 电网韧性（日本电网脆弱）<br><strong>#2:</strong> 高电价套利（日本：$0.19）<br><strong>#3:</strong> 绿色许可要求（新加坡）</p>
+      </div>
+      <div class="region-card" style="border-top-color:#06b6d4">
+        <div class="flag">🇦🇺🇨🇦</div>
+        <h3><span class="en">Australia & Canada</span><span class="zh" style="display:none">澳大利亚和加拿大</span></h3>
+        <p class="en"><strong>#1:</strong> Govt sustainability mandates (AU)<br><strong>#2:</strong> Grid queue bypass (CA Alberta)<br><strong>#3:</strong> Excellent solar irradiance (AU)</p>
+        <p class="zh" style="display:none"><strong>#1:</strong> 政府可持续性要求（澳）<br><strong>#2:</strong> 电网排队绕行（加拿大阿省）<br><strong>#3:</strong> 极佳光照资源（澳）</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Research: Industry Events -->
+  <div class="section">
+    <h2><span class="en">Key Industry Events & Entry Points (2026)</span><span class="zh" style="display:none">关键行业活动与切入点（2026）</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span class="en">Event</span><span class="zh" style="display:none">活动</span></th>
+          <th><span class="en">Focus</span><span class="zh" style="display:none">重点</span></th>
+          <th><span class="en">Region</span><span class="zh" style="display:none">区域</span></th>
+          <th><span class="en">Website</span><span class="zh" style="display:none">网址</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Energy Storage Summit USA 2026</td><td>BESS + AI Data Center</td><td>USA 🇺🇸</td><td>storageusa.solarenergyevents.com</td></tr>
+        <tr><td>Power Supply for Data Centers 2026</td><td>DC Energy Procurement</td><td>Europe 🇪🇺</td><td>power-supply-datacenters.com</td></tr>
+        <tr><td>DOE AI Data Center RFPs</td><td>Federal Land + AI DC</td><td>USA 🇺🇸</td><td>energy.gov</td></tr>
+        <tr><td>Data Center World 2026</td><td>Hyperscaler & Colo</td><td>Global</td><td>datacenters.com</td></tr>
+        <tr><td>WFES / Abu Dhabi Sustainability Week</td><td>Solar+BESS + Gulf AI</td><td>UAE 🇦🇪</td><td>abudhabisustainabilityweek.com</td></tr>
+        <tr><td>RE-Invest India</td><td>Renewable Energy</td><td>India 🇮🇳</td><td>re-invest.in</td></tr>
+        <tr><td>All-Energy Australia</td><td>Solar + Storage</td><td>Australia 🇦🇺</td><td>all-energy.com.au</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Research: Regulatory Landscape -->
+  <div class="section">
+    <h2><span class="en">Regulatory Landscape Driving BESS+Solar Adoption</span><span class="zh" style="display:none">推动BESS+光伏采用的监管环境</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span class="en">Regulation / Policy</span><span class="zh" style="display:none">法规/政策</span></th>
+          <th><span class="en">Region</span><span class="zh" style="display:none">区域</span></th>
+          <th><span class="en">Effective</span><span class="zh" style="display:none">生效时间</span></th>
+          <th><span class="en">Impact</span><span class="zh" style="display:none">影响</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Germany Energy Efficiency Act (PUE ≤ 1.2)</td><td>Germany 🇩🇪</td><td>2026</td><td class="en">New facilities must achieve PUE 1.2; BESS helps optimize</td><td class="zh" style="display:none">新设施须达PUE 1.2；BESS助力优化</td></tr>
+        <tr><td>EU Data Centre Energy Efficiency Package</td><td>EU 🇪🇺</td><td>Q1 2026</td><td class="en">Mandatory reporting + efficiency standards</td><td class="zh" style="display:none">强制报告+能效标准</td></tr>
+        <tr><td>Ireland Large Energy Users Action Plan</td><td>Ireland 🇮🇪</td><td>Active</td><td class="en">New DCs must co-locate with renewable generation</td><td class="zh" style="display:none">新数据中心须与可再生能源共址</td></tr>
+        <tr><td>Singapore Green-Only DC Permits</td><td>Singapore 🇸🇬</td><td>Active</td><td class="en">Only green DCs approved after moratorium lift</td><td class="zh" style="display:none">解除禁令后仅批准绿色数据中心</td></tr>
+        <tr><td>Australia DC Sustainability Expectations</td><td>Australia 🇦🇺</td><td>March 2026</td><td class="en">Government mandates sustainability plans for approvals</td><td class="zh" style="display:none">政府要求审批必须有可持续发展计划</td></tr>
+        <tr><td>UAE Sovereign AI Renewable Mandate</td><td>UAE 🇦🇪</td><td>Active</td><td class="en">AI campuses must run on renewable energy</td><td class="zh" style="display:none">AI园区须使用可再生能源</td></tr>
+        <tr><td>Saudi Vision 2030 (50% RE)</td><td>Saudi 🇸🇦</td><td>2030 target</td><td class="en">50% renewable mix; NEOM = 100% renewable</td><td class="zh" style="display:none">50%可再生能源比例；NEOM=100%可再生</td></tr>
+        <tr><td>India 500 GW RE Target</td><td>India 🇮🇳</td><td>2030 target</td><td class="en">Sufficient for all projected DC demand</td><td class="zh" style="display:none">足以满足所有预测数据中心需求</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== USA TAB ===================== -->
+<div id="tab-usa" class="tab-panel">
+  <div class="section">
+    <h2><span class="en">USA — Top 10 AI Data Center Targets for BESS + Solar</span><span class="zh" style="display:none">美国 — BESS+光伏前十大AI数据中心目标客户</span></h2>
+  </div>
+
+  <div class="company-entry tier1">
+    <h4>1. OpenAI / Oracle — Stargate Project <span class="badge badge-fire"><span class="en">HIGHEST</span><span class="zh" style="display:none">最高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 7 GW planned, 9+ sites, $400B+ investment</span><span class="zh" style="display:none"><strong>规模：</strong>规划7 GW，9+站点，$400B+投资</span></div>
+    <div class="detail"><span class="en"><strong>Locations:</strong> Texas (1.2 GW live), Michigan, Wisconsin, Wyoming, New Mexico, Georgia, Ohio, Pennsylvania</span><span class="zh" style="display:none"><strong>地点：</strong>德州（1.2 GW已运营）、密歇根、威斯康星、怀俄明、新墨西哥、佐治亚、俄亥俄、宾夕法尼亚</span></div>
+    <div class="detail"><span class="en"><strong>BESS Status:</strong> Michigan 1.3 GW BESS approved (April 2026); MV BESS at Abilene campus</span><span class="zh" style="display:none"><strong>储能状态：</strong>密歇根1.3 GW BESS已批准（2026年4月）；阿比林园区配备MV BESS</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 500 MW – 2 GW BESS + Solar per site</span><span class="zh" style="display:none"><strong>机会：</strong>每站点500 MW – 2 GW BESS+光伏</span></div>
+    <div class="detail"><span class="en"><strong>Contacts:</strong> Oracle Infrastructure Energy, SB Energy (SoftBank), OpenAI Stargate Program Office</span><span class="zh" style="display:none"><strong>联系方：</strong>Oracle基础设施能源部、SB Energy（软银）、OpenAI Stargate项目办</span></div>
+  </div>
+
+  <div class="company-entry tier1">
+    <h4>2. Amazon AWS — Project Rainier <span class="badge badge-fire"><span class="en">HIGHEST</span><span class="zh" style="display:none">最高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 13.6 GW solar pipeline; $200B global capex 2026</span><span class="zh" style="display:none"><strong>规模：</strong>13.6 GW光伏管线；2026年全球资本支出$200B</span></div>
+    <div class="detail"><span class="en"><strong>Key Project:</strong> Indiana — 2.2 GW, 1,200 acres, 30 data centers planned</span><span class="zh" style="display:none"><strong>关键项目：</strong>印第安纳 — 2.2 GW，1200英亩，规划30座数据中心</span></div>
+    <div class="detail"><span class="en"><strong>Texas:</strong> 20+ solar projects including 500 MW Webb County</span><span class="zh" style="display:none"><strong>德州：</strong>20+光伏项目，包括500 MW Webb County</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 1–3 GW BESS + Solar across portfolio</span><span class="zh" style="display:none"><strong>机会：</strong>组合中1–3 GW BESS+光伏</span></div>
+  </div>
+
+  <div class="company-entry tier1">
+    <h4>3. Microsoft — AI Campus Expansion <span class="badge badge-fire"><span class="en">HIGHEST</span><span class="zh" style="display:none">最高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 10.5 GW Brookfield deal + 12 GW Qcells solar</span><span class="zh" style="display:none"><strong>规模：</strong>10.5 GW Brookfield协议 + 12 GW Qcells光伏</span></div>
+    <div class="detail"><span class="en"><strong>Key Project:</strong> Wisconsin Fairwater (zero-water cooling, 315 acres)</span><span class="zh" style="display:none"><strong>关键项目：</strong>威斯康星Fairwater（零水冷却，315英亩）</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 500 MW – 2 GW</span><span class="zh" style="display:none"><strong>机会：</strong>500 MW – 2 GW</span></div>
+  </div>
+
+  <div class="company-entry tier1">
+    <h4>4. Crusoe Energy — Renewable AI Infrastructure <span class="badge badge-fire"><span class="en">HIGHEST</span><span class="zh" style="display:none">最高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 12 GWh Form Energy deal; 900 MW Microsoft campus with MV BESS</span><span class="zh" style="display:none"><strong>规模：</strong>12 GWh Form Energy协议；900 MW微软园区配备MV BESS</span></div>
+    <div class="detail"><span class="en"><strong>Status:</strong> Already an active BESS buyer — highest conversion probability</span><span class="zh" style="display:none"><strong>状态：</strong>已是活跃BESS买家 — 转化概率最高</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 500 MW – 1 GW</span><span class="zh" style="display:none"><strong>机会：</strong>500 MW – 1 GW</span></div>
+  </div>
+
+  <div class="company-entry tier2">
+    <h4>5. Google / Alphabet <span class="badge badge-star"><span class="en">VERY HIGH</span><span class="zh" style="display:none">非常高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 312 MW BESS operational; 1 GW Texas solar (TotalEnergies PPA); $20B Intersect Power deal</span><span class="zh" style="display:none"><strong>规模：</strong>312 MW BESS运营中；德州1 GW光伏（TotalEnergies PPA）；$20B Intersect Power协议</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 500 MW – 1 GW near-term</span><span class="zh" style="display:none"><strong>机会：</strong>近期500 MW – 1 GW</span></div>
+  </div>
+
+  <div class="company-entry tier2">
+    <h4>6. Meta — Hyperion + Texas <span class="badge badge-star"><span class="en">VERY HIGH</span><span class="zh" style="display:none">非常高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> World #1 clean energy buyer (10.24 GW); 905 MW Texas solar; Louisiana Hyperion mega-campus</span><span class="zh" style="display:none"><strong>规模：</strong>全球第一清洁能源买家（10.24 GW）；德州905 MW光伏；路易斯安那Hyperion超级园区</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 300 MW – 1 GW</span><span class="zh" style="display:none"><strong>机会：</strong>300 MW – 1 GW</span></div>
+  </div>
+
+  <div class="company-entry tier2">
+    <h4>7. xAI — Colossus Complex <span class="badge badge-star"><span class="en">HIGH</span><span class="zh" style="display:none">高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 300 MW operational (Memphis); 200K+ GPUs; built in 122 days</span><span class="zh" style="display:none"><strong>规模：</strong>300 MW运营中（孟菲斯）；20万+ GPU；122天建成</span></div>
+    <div class="detail"><span class="en"><strong>Driver:</strong> Tennessee regulatory pressure to shift to renewables</span><span class="zh" style="display:none"><strong>驱动：</strong>田纳西州监管压力要求转向可再生能源</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 200–500 MW</span><span class="zh" style="display:none"><strong>机会：</strong>200–500 MW</span></div>
+  </div>
+
+  <div class="company-entry tier3">
+    <h4>8. CoreWeave <span class="badge badge-med"><span class="en">MEDIUM-HIGH</span><span class="zh" style="display:none">中高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> $6B Lancaster campus (100→300 MW); OpenAI $11.9B deal</span><span class="zh" style="display:none"><strong>规模：</strong>$6B Lancaster园区（100→300 MW）；OpenAI $11.9B合同</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 100–300 MW</span><span class="zh" style="display:none"><strong>机会：</strong>100–300 MW</span></div>
+  </div>
+
+  <div class="company-entry tier3">
+    <h4>9. SB Energy (SoftBank) — Portsmouth <span class="badge badge-med"><span class="en">MEDIUM-HIGH</span><span class="zh" style="display:none">中高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> World's largest AI DC on DOE land (Ohio); net-zero goal</span><span class="zh" style="display:none"><strong>规模：</strong>全球最大AI数据中心（DOE用地，俄亥俄）；零排放目标</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 500 MW – 2 GW (equipment supply + EPC)</span><span class="zh" style="display:none"><strong>机会：</strong>500 MW – 2 GW（设备供应+EPC）</span></div>
+  </div>
+
+  <div class="company-entry tier3">
+    <h4>10. Colocation Providers (Equinix, Digital Realty, Vantage) <span class="badge badge-med"><span class="en">MEDIUM</span><span class="zh" style="display:none">中等</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> Multi-campus across VA, TX, OR, GA, IL</span><span class="zh" style="display:none"><strong>规模：</strong>多园区覆盖弗吉尼亚、德州、俄勒冈、佐治亚、伊利诺伊</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 50–200 MW per campus</span><span class="zh" style="display:none"><strong>机会：</strong>每园区50–200 MW</span></div>
+  </div>
+</div>
+
+<!-- ===================== GLOBAL TAB ===================== -->
+<div id="tab-global" class="tab-panel">
+  <div class="section">
+    <h2><span class="en">Global Targets by Region (Excluding China)</span><span class="zh" style="display:none">全球目标客户按区域（不含中国）</span></h2>
+  </div>
+
+  <!-- Region filter -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterRegion('all')"><span class="en">All Regions</span><span class="zh" style="display:none">所有区域</span></button>
+    <button class="filter-btn" onclick="filterRegion('me')">🇦🇪 <span class="en">Middle East</span><span class="zh" style="display:none">中东</span></button>
+    <button class="filter-btn" onclick="filterRegion('eu')">🇪🇺 <span class="en">Europe</span><span class="zh" style="display:none">欧洲</span></button>
+    <button class="filter-btn" onclick="filterRegion('in')">🇮🇳 <span class="en">India</span><span class="zh" style="display:none">印度</span></button>
+    <button class="filter-btn" onclick="filterRegion('ap')">🇯🇵 <span class="en">Asia-Pacific</span><span class="zh" style="display:none">亚太</span></button>
+    <button class="filter-btn" onclick="filterRegion('au')">🇦🇺 <span class="en">Australia</span><span class="zh" style="display:none">澳大利亚</span></button>
+    <button class="filter-btn" onclick="filterRegion('ca')">🇨🇦 <span class="en">Canada</span><span class="zh" style="display:none">加拿大</span></button>
+  </div>
+
+  <!-- Middle East -->
+  <div class="company-entry tier1" data-region="me">
+    <h4>🇦🇪 G42 / UAE-US AI Campus — Abu Dhabi <span class="badge badge-fire"><span class="en">HIGHEST GLOBALLY</span><span class="zh" style="display:none">全球最高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 5 GW campus, 10 sq mi, partners: OpenAI, NVIDIA, Oracle, SoftBank</span><span class="zh" style="display:none"><strong>规模：</strong>5 GW园区，10平方英里，合作方：OpenAI、NVIDIA、Oracle、软银</span></div>
+    <div class="detail"><span class="en"><strong>Energy:</strong> Nuclear + solar + gas; world's largest solar+BESS (5.2 GW / 19 GWh) nearby</span><span class="zh" style="display:none"><strong>能源：</strong>核能+光伏+天然气；全球最大光储项目（5.2 GW / 19 GWh）邻近</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 1–5 GW solar + multi-GWh BESS</span><span class="zh" style="display:none"><strong>机会：</strong>1–5 GW光伏 + 多GWh BESS</span></div>
+    <div class="detail"><span class="en"><strong>Contacts:</strong> G42 Infrastructure, Masdar, Khazna Data Centers, Emerge (Masdar/EDF JV)</span><span class="zh" style="display:none"><strong>联系方：</strong>G42基础设施、Masdar、Khazna数据中心、Emerge（Masdar/EDF合资）</span></div>
+  </div>
+
+  <div class="company-entry tier1" data-region="me">
+    <h4>🇦🇪 OpenAI Stargate UAE — Abu Dhabi <span class="badge badge-fire"><span class="en">HIGHEST</span><span class="zh" style="display:none">最高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 1 GW AI cluster; 200 MW live in 2026</span><span class="zh" style="display:none"><strong>规模：</strong>1 GW AI集群；2026年200 MW投运</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 200–500 MW solar + 1–3 GWh BESS</span><span class="zh" style="display:none"><strong>机会：</strong>200–500 MW光伏 + 1–3 GWh BESS</span></div>
+  </div>
+
+  <div class="company-entry tier1" data-region="me">
+    <h4>🇸🇦 NEOM / DataVolt — Saudi Arabia <span class="badge badge-fire"><span class="en">VERY HIGH</span><span class="zh" style="display:none">非常高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 1.5 GW Oxagon DC campus; DataVolt $5B net-zero AI campus (100% renewable)</span><span class="zh" style="display:none"><strong>规模：</strong>1.5 GW Oxagon数据中心园区；DataVolt $5B净零AI园区（100%可再生）</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 500 MW – 2 GW solar + multi-GWh BESS</span><span class="zh" style="display:none"><strong>机会：</strong>500 MW – 2 GW光伏 + 多GWh BESS</span></div>
+    <div class="detail"><span class="en"><strong>Contacts:</strong> NEOM Energy Division, DataVolt, Saudi Aramco Digital, SDAIA</span><span class="zh" style="display:none"><strong>联系方：</strong>NEOM能源部、DataVolt、沙特阿美数字化、SDAIA</span></div>
+  </div>
+
+  <div class="company-entry tier2" data-region="me">
+    <h4>🇦🇪 Microsoft + G42 — UAE (200 MW) <span class="badge badge-star"><span class="en">HIGH</span><span class="zh" style="display:none">高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 200 MW expansion via Khazna; live before end 2026</span><span class="zh" style="display:none"><strong>规模：</strong>通过Khazna扩容200 MW；2026年底前投运</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 100–300 MW</span><span class="zh" style="display:none"><strong>机会：</strong>100–300 MW</span></div>
+  </div>
+
+  <!-- Europe -->
+  <div class="company-entry tier1" data-region="eu">
+    <h4>🇮🇪 Echelon Data Centers — Ireland Green Energy Park <span class="badge badge-fire"><span class="en">VERY HIGH</span><span class="zh" style="display:none">非常高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> First Green Energy Park in Ireland; DC + 800 MW offshore wind co-location</span><span class="zh" style="display:none"><strong>规模：</strong>爱尔兰首个绿色能源园区；数据中心+800 MW海上风电共址</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 200–500 MW BESS (wind intermittency management)</span><span class="zh" style="display:none"><strong>机会：</strong>200–500 MW BESS（风电间歇性管理）</span></div>
+  </div>
+
+  <div class="company-entry tier2" data-region="eu">
+    <h4>🇸🇪 Microsoft — Sweden Zero-Carbon Campus <span class="badge badge-star"><span class="en">VERY HIGH</span><span class="zh" style="display:none">非常高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Partner:</strong> Vattenfall (renewable energy supply); zero-carbon mandate</span><span class="zh" style="display:none"><strong>合作方：</strong>Vattenfall（可再生能源供应）；零碳要求</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 100–300 MW</span><span class="zh" style="display:none"><strong>机会：</strong>100–300 MW</span></div>
+  </div>
+
+  <div class="company-entry tier2" data-region="eu">
+    <h4>🇪🇸 Amazon AWS — Spain (€33.7B) <span class="badge badge-star"><span class="en">VERY HIGH</span><span class="zh" style="display:none">非常高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> €33.7B cloud + AI investment in Spain; Europe's solar belt</span><span class="zh" style="display:none"><strong>规模：</strong>€33.7B西班牙云计算+AI投资；欧洲太阳能带</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 200–500 MW solar + BESS</span><span class="zh" style="display:none"><strong>机会：</strong>200–500 MW光伏+BESS</span></div>
+  </div>
+
+  <div class="company-entry tier2" data-region="eu">
+    <h4>🇫🇮 Google — Finland Hamina Expansion <span class="badge badge-star"><span class="en">HIGH</span><span class="zh" style="display:none">高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> $670M additional investment; district heating integration</span><span class="zh" style="display:none"><strong>规模：</strong>$670M追加投资；区域供热集成</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 100–200 MW BESS</span><span class="zh" style="display:none"><strong>机会：</strong>100–200 MW BESS</span></div>
+  </div>
+
+  <div class="company-entry tier3" data-region="eu">
+    <h4>🇳🇱🇬🇧🇩🇪 Colocation Providers — NL/UK/DE <span class="badge badge-med"><span class="en">HIGH</span><span class="zh" style="display:none">高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Players:</strong> Equinix, Digital Realty, NorthC, Virtus, CyrusOne</span><span class="zh" style="display:none"><strong>运营商：</strong>Equinix、Digital Realty、NorthC、Virtus、CyrusOne</span></div>
+    <div class="detail"><span class="en"><strong>Driver:</strong> EU PUE mandate + UK highest elec prices in Europe + NL virtual power plants</span><span class="zh" style="display:none"><strong>驱动：</strong>EU PUE要求 + 英国欧洲最高电价 + 荷兰虚拟电厂</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 50–300 MW per operator</span><span class="zh" style="display:none"><strong>机会：</strong>每运营商50–300 MW</span></div>
+  </div>
+
+  <!-- India -->
+  <div class="company-entry tier1" data-region="in">
+    <h4>🇮🇳 Adani Group — Green Hyperscale Data Centers <span class="badge badge-fire"><span class="en">HIGHEST IN INDIA</span><span class="zh" style="display:none">印度最高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> $100B by 2035; 5 GW renewable-powered platform; 30 GW Khavada solar+wind park</span><span class="zh" style="display:none"><strong>规模：</strong>至2035年$100B；5 GW可再生能源平台；30 GW Khavada光风园区</span></div>
+    <div class="detail"><span class="en"><strong>Partners:</strong> Google, Flipkart, Microsoft</span><span class="zh" style="display:none"><strong>合作方：</strong>Google、Flipkart、微软</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 1–3 GW solar + multi-GWh BESS</span><span class="zh" style="display:none"><strong>机会：</strong>1–3 GW光伏 + 多GWh BESS</span></div>
+  </div>
+
+  <div class="company-entry tier2" data-region="in">
+    <h4>🇮🇳 Google — Visakhapatnam (AP) <span class="badge badge-star"><span class="en">VERY HIGH</span><span class="zh" style="display:none">非常高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> $15B; largest Google campus globally; gigawatt-scale operations</span><span class="zh" style="display:none"><strong>规模：</strong>$15B；全球最大Google园区；吉瓦级运营</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 500 MW – 1 GW</span><span class="zh" style="display:none"><strong>机会：</strong>500 MW – 1 GW</span></div>
+  </div>
+
+  <div class="company-entry tier2" data-region="in">
+    <h4>🇮🇳 Microsoft — Hyderabad <span class="badge badge-star"><span class="en">VERY HIGH</span><span class="zh" style="display:none">非常高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> $17.5B India investment; Hyderabad live mid-2026; largest MSFT region in India</span><span class="zh" style="display:none"><strong>规模：</strong>$17.5B印度投资；海得拉巴2026年中投运；印度最大微软区域</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 200–500 MW</span><span class="zh" style="display:none"><strong>机会：</strong>200–500 MW</span></div>
+  </div>
+
+  <div class="company-entry tier2" data-region="in">
+    <h4>🇮🇳 Amazon AWS — India <span class="badge badge-star"><span class="en">HIGH</span><span class="zh" style="display:none">高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> $8.3B (Jan 2026); $35B target by 2030; Mumbai, Hyderabad, Pune</span><span class="zh" style="display:none"><strong>规模：</strong>$8.3B（2026年1月）；2030年目标$35B；孟买、海得拉巴、浦那</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 200–500 MW</span><span class="zh" style="display:none"><strong>机会：</strong>200–500 MW</span></div>
+  </div>
+
+  <!-- Asia-Pacific -->
+  <div class="company-entry tier2" data-region="ap">
+    <h4>🇯🇵 Japan — National AI DC Buildout <span class="badge badge-star"><span class="en">HIGH</span><span class="zh" style="display:none">高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Players:</strong> SoftBank Japan, NTT Communications, KDDI, Fujitsu, Equinix Japan</span><span class="zh" style="display:none"><strong>运营商：</strong>日本软银、NTT Communications、KDDI、富士通、Equinix日本</span></div>
+    <div class="detail"><span class="en"><strong>Driver:</strong> Grid fragile post-Fukushima; $0.19/kWh → strong BESS arbitrage</span><span class="zh" style="display:none"><strong>驱动：</strong>福岛后电网脆弱；$0.19/kWh → 强储能套利</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 100–500 MW per major operator</span><span class="zh" style="display:none"><strong>机会：</strong>每主要运营商100–500 MW</span></div>
+  </div>
+
+  <div class="company-entry tier3" data-region="ap">
+    <h4>🇰🇷 South Korea — Samsung / KT Cloud <span class="badge badge-med"><span class="en">HIGH</span><span class="zh" style="display:none">高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> Samsung Pyeongtaek: 1 GW + 500 MW AI addition; KT Cloud, Kakao, LG CNS</span><span class="zh" style="display:none"><strong>规模：</strong>三星平泽：1 GW + 500 MW AI扩展；KT Cloud、Kakao、LG CNS</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 100–300 MW</span><span class="zh" style="display:none"><strong>机会：</strong>100–300 MW</span></div>
+  </div>
+
+  <div class="company-entry tier3" data-region="ap">
+    <h4>🇸🇬 Singapore — Green-Only Permits <span class="badge badge-med"><span class="en">MEDIUM-HIGH</span><span class="zh" style="display:none">中高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Players:</strong> Equinix, Digital Realty, Keppel, ST Telemedia</span><span class="zh" style="display:none"><strong>运营商：</strong>Equinix、Digital Realty、Keppel、ST Telemedia</span></div>
+    <div class="detail"><span class="en"><strong>Driver:</strong> Only green DCs approved; 230kV grid limitation</span><span class="zh" style="display:none"><strong>驱动：</strong>仅批准绿色数据中心；230kV电网限制</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 50–150 MW per operator</span><span class="zh" style="display:none"><strong>机会：</strong>每运营商50–150 MW</span></div>
+  </div>
+
+  <!-- Australia -->
+  <div class="company-entry tier2" data-region="au">
+    <h4>🇦🇺 Australia — NSW Data Center Boom <span class="badge badge-star"><span class="en">HIGH</span><span class="zh" style="display:none">高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 3.67 GW pipeline (22 facilities); #2 globally for DC investment attractiveness</span><span class="zh" style="display:none"><strong>规模：</strong>3.67 GW管线（22座设施）；全球数据中心投资吸引力排名第二</span></div>
+    <div class="detail"><span class="en"><strong>Players:</strong> Macquarie Data Centers, NextDC, Digital Realty, Equinix, Microsoft Australia</span><span class="zh" style="display:none"><strong>运营商：</strong>Macquarie数据中心、NextDC、Digital Realty、Equinix、微软澳大利亚</span></div>
+    <div class="detail"><span class="en"><strong>Driver:</strong> Govt sustainability mandate (March 2026); excellent solar irradiance</span><span class="zh" style="display:none"><strong>驱动：</strong>政府可持续性要求（2026年3月）；极佳光照资源</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 200–500 MW (near-term NSW pipeline)</span><span class="zh" style="display:none"><strong>机会：</strong>200–500 MW（近期NSW管线）</span></div>
+  </div>
+
+  <!-- Canada -->
+  <div class="company-entry tier2" data-region="ca">
+    <h4>🇨🇦 Alberta — Hyperscale Queue <span class="badge badge-star"><span class="en">HIGH</span><span class="zh" style="display:none">高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> 10 GW+ proposed projects in interconnection queue</span><span class="zh" style="display:none"><strong>规模：</strong>10 GW+拟议项目在电网接入排队中</span></div>
+    <div class="detail"><span class="en"><strong>Driver:</strong> Deregulated market; grid queue delays; solar+BESS for bypass</span><span class="zh" style="display:none"><strong>驱动：</strong>市场化电力市场；电网排队延迟；光储用于绕网</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 500 MW – 2 GW (over 3–5 years)</span><span class="zh" style="display:none"><strong>机会：</strong>500 MW – 2 GW（3–5年内）</span></div>
+  </div>
+
+  <div class="company-entry tier3" data-region="ca">
+    <h4>🇨🇦 Microsoft — Ontario & Quebec <span class="badge badge-med"><span class="en">MEDIUM-HIGH</span><span class="zh" style="display:none">中高</span></span></h4>
+    <div class="detail"><span class="en"><strong>Scale:</strong> Working with Ontario + Quebec governments; cheap hydro grid (~85% renewable)</span><span class="zh" style="display:none"><strong>规模：</strong>与安大略+魁北克政府合作；廉价水电电网（~85%可再生）</span></div>
+    <div class="detail"><span class="en"><strong>Opportunity:</strong> 100–300 MW</span><span class="zh" style="display:none"><strong>机会：</strong>100–300 MW</span></div>
+  </div>
+</div>
+
+<!-- ===================== STRATEGY TAB ===================== -->
+<div id="tab-strategy" class="tab-panel">
+  <div class="section">
+    <h2><span class="en">Go-to-Market Strategy — Phased Approach</span><span class="zh" style="display:none">市场进入战略 — 分阶段方案</span></h2>
+  </div>
+
+  <div class="timeline">
+    <div class="phase-card p1">
+      <h4><span class="en">Phase 1 — Act Now (Q2 2026)</span><span class="zh" style="display:none">第一阶段 — 立即行动（2026 Q2）</span></h4>
+      <ul>
+        <li><span class="en">USA: Stargate (Oracle/SB Energy), Amazon AWS, Crusoe Energy</span><span class="zh" style="display:none">美国：Stargate（Oracle/SB Energy）、Amazon AWS、Crusoe Energy</span></li>
+        <li><span class="en">UAE: G42 Infrastructure + Masdar + Khazna</span><span class="zh" style="display:none">阿联酋：G42基础设施 + Masdar + Khazna</span></li>
+        <li><span class="en">India: Adani Green Energy (AGEL)</span><span class="zh" style="display:none">印度：Adani绿色能源（AGEL）</span></li>
+        <li><span class="en">Saudi: NEOM / DataVolt (net-zero mandate)</span><span class="zh" style="display:none">沙特：NEOM / DataVolt（净零要求）</span></li>
+      </ul>
+    </div>
+    <div class="phase-card p2">
+      <h4><span class="en">Phase 2 — High Priority (Q3 2026)</span><span class="zh" style="display:none">第二阶段 — 高优先级（2026 Q3）</span></h4>
+      <ul>
+        <li><span class="en">USA: Google, Meta, xAI, Microsoft</span><span class="zh" style="display:none">美国：Google、Meta、xAI、微软</span></li>
+        <li><span class="en">Europe: Ireland (Echelon), Sweden (MSFT), Spain (AWS)</span><span class="zh" style="display:none">欧洲：爱尔兰（Echelon）、瑞典（MSFT）、西班牙（AWS）</span></li>
+        <li><span class="en">Australia: NSW 3.67 GW pipeline operators</span><span class="zh" style="display:none">澳大利亚：NSW 3.67 GW管线运营商</span></li>
+        <li><span class="en">India: Google (Visakhapatnam), Microsoft (Hyderabad)</span><span class="zh" style="display:none">印度：Google（维沙卡帕特南）、微软（海得拉巴）</span></li>
+      </ul>
+    </div>
+    <div class="phase-card p3">
+      <h4><span class="en">Phase 3 — Emerging (2027+)</span><span class="zh" style="display:none">第三阶段 — 新兴市场（2027+）</span></h4>
+      <ul>
+        <li><span class="en">Japan: SoftBank, NTT, KDDI</span><span class="zh" style="display:none">日本：软银、NTT、KDDI</span></li>
+        <li><span class="en">South Korea: Samsung, KT Cloud</span><span class="zh" style="display:none">韩国：三星、KT Cloud</span></li>
+        <li><span class="en">Canada: Alberta 10 GW queue</span><span class="zh" style="display:none">加拿大：阿尔伯塔10 GW排队</span></li>
+        <li><span class="en">SE Asia: Singapore green permits</span><span class="zh" style="display:none">东南亚：新加坡绿色许可</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Regional Partners -->
+  <div class="section" style="margin-top:20px;">
+    <h2><span class="en">Recommended Regional Partners</span><span class="zh" style="display:none">推荐区域合作伙伴</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span class="en">Region</span><span class="zh" style="display:none">区域</span></th>
+          <th><span class="en">Recommended Partner</span><span class="zh" style="display:none">推荐合作伙伴</span></th>
+          <th><span class="en">Role</span><span class="zh" style="display:none">角色</span></th>
+          <th><span class="en">Rationale</span><span class="zh" style="display:none">理由</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>UAE / Saudi</td><td>Masdar / ACWA Power</td><td><span class="en">Local energy developer</span><span class="zh" style="display:none">当地能源开发商</span></td><td class="en">Sovereign-backed; direct access to G42 + NEOM</td><td class="zh" style="display:none">主权基金支持；直接接触G42 + NEOM</td></tr>
+        <tr><td>India</td><td>Adani Green / Greenko</td><td><span class="en">Local RE delivery</span><span class="zh" style="display:none">当地可再生能源交付</span></td><td class="en">30 GW Khavada park; end-to-end project delivery</td><td class="zh" style="display:none">30 GW Khavada园区；端到端项目交付</td></tr>
+        <tr><td>Europe (Nordics)</td><td>Vattenfall / Statkraft</td><td><span class="en">Grid integration</span><span class="zh" style="display:none">电网整合</span></td><td class="en">Existing Microsoft partner; regulatory expertise</td><td class="zh" style="display:none">现有微软合作方；监管专业知识</td></tr>
+        <tr><td>Europe (South)</td><td>TotalEnergies / EDF</td><td><span class="en">Solar + storage EPC</span><span class="zh" style="display:none">光储EPC</span></td><td class="en">Google PPA partner; Emerge JV with Masdar</td><td class="zh" style="display:none">Google PPA合作方；与Masdar的Emerge合资</td></tr>
+        <tr><td>Australia</td><td>AGL Energy / Origin</td><td><span class="en">Local market access</span><span class="zh" style="display:none">当地市场准入</span></td><td class="en">AEMO grid integration; regulatory navigation</td><td class="zh" style="display:none">AEMO电网整合；监管指导</td></tr>
+        <tr><td>Japan</td><td>JERA / Marubeni</td><td><span class="en">Project development</span><span class="zh" style="display:none">项目开发</span></td><td class="en">Japan's largest power generators; data center access</td><td class="zh" style="display:none">日本最大发电商；数据中心准入</td></tr>
+        <tr><td>Canada</td><td>TransAlta / Capital Power</td><td><span class="en">Alberta market</span><span class="zh" style="display:none">阿尔伯塔市场</span></td><td class="en">Deregulated market expertise; existing RE portfolio</td><td class="zh" style="display:none">市场化电力市场专业知识；现有RE组合</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Outreach Priority Matrix -->
+  <div class="section">
+    <h2><span class="en">Global Outreach Priority Matrix</span><span class="zh" style="display:none">全球客户开发优先级矩阵</span></h2>
+    <table>
+      <thead>
+        <tr>
+          <th><span class="en">Target</span><span class="zh" style="display:none">目标</span></th>
+          <th><span class="en">Region</span><span class="zh" style="display:none">区域</span></th>
+          <th><span class="en">Timeline</span><span class="zh" style="display:none">时间线</span></th>
+          <th><span class="en">Contract Size</span><span class="zh" style="display:none">合同规模</span></th>
+          <th><span class="en">First Move</span><span class="zh" style="display:none">首要行动</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>G42 / UAE Campus</strong></td><td>UAE 🇦🇪</td><td><span class="en">Immediate</span><span class="zh" style="display:none">立即</span></td><td>$1B–5B</td><td class="en">Contact G42 + Masdar</td><td class="zh" style="display:none">联系G42 + Masdar</td></tr>
+        <tr><td><strong>Stargate (Oracle/OpenAI)</strong></td><td>USA 🇺🇸</td><td><span class="en">Immediate</span><span class="zh" style="display:none">立即</span></td><td>$500M–2B</td><td class="en">Oracle Infra + SB Energy</td><td class="zh" style="display:none">Oracle基础设施 + SB Energy</td></tr>
+        <tr><td><strong>Adani Green Energy</strong></td><td>India 🇮🇳</td><td><span class="en">Immediate</span><span class="zh" style="display:none">立即</span></td><td>$500M–2B</td><td class="en">AGEL procurement team</td><td class="zh" style="display:none">AGEL采购团队</td></tr>
+        <tr><td><strong>NEOM / DataVolt</strong></td><td>Saudi 🇸🇦</td><td><span class="en">Immediate</span><span class="zh" style="display:none">立即</span></td><td>$500M–2B</td><td class="en">NEOM Energy + DataVolt</td><td class="zh" style="display:none">NEOM能源 + DataVolt</td></tr>
+        <tr><td><strong>Amazon AWS</strong></td><td>Global</td><td>Q2 2026</td><td>$200M–1B</td><td class="en">AWS Energy (TX + Spain)</td><td class="zh" style="display:none">AWS能源（德州+西班牙）</td></tr>
+        <tr><td><strong>Microsoft</strong></td><td>Global</td><td>Q2 2026</td><td>$200M–1B</td><td class="en">MSFT Infra (WI, SE, IN)</td><td class="zh" style="display:none">MSFT基础设施（WI/SE/IN）</td></tr>
+        <tr><td><strong>Crusoe Energy</strong></td><td>USA 🇺🇸</td><td><span class="en">Immediate</span><span class="zh" style="display:none">立即</span></td><td>$50M–200M</td><td class="en">Direct BESS supplier talk</td><td class="zh" style="display:none">直接BESS供应商对话</td></tr>
+        <tr><td><strong>Google</strong></td><td>Global</td><td>Q2–Q3 2026</td><td>$100M–500M</td><td class="en">Intersect Power + India</td><td class="zh" style="display:none">Intersect Power + 印度</td></tr>
+        <tr><td><strong>Echelon (Ireland)</strong></td><td>EU 🇮🇪</td><td>Q3 2026</td><td>$100M–300M</td><td class="en">Green Energy Park team</td><td class="zh" style="display:none">绿色能源园区团队</td></tr>
+        <tr><td><strong>Australia NSW Pipeline</strong></td><td>AU 🇦🇺</td><td>Q3 2026</td><td>$100M–500M</td><td class="en">NextDC + Macquarie DC</td><td class="zh" style="display:none">NextDC + Macquarie DC</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <div class="section" style="text-align:center; background:var(--primary); color:#fff; border-radius:12px;">
+    <p style="font-size:14px; opacity:.8;"><span class="en">Report compiled: April 2026 | Marketing Research: BESS+Solar Global Demand</span><span class="zh" style="display:none">报告编制：2026年4月 | 市场研究：BESS+光伏全球需求</span></p>
+    <p style="font-size:12px; opacity:.5; margin-top:4px;"><span class="en">Sources: SEIA, DOE, IEA, Bloomberg NEF, Data Center Dynamics, Energy Storage News, PV Magazine, MIT Tech Review</span><span class="zh" style="display:none">数据来源：SEIA、DOE、IEA、彭博新能源、Data Center Dynamics、Energy Storage News、PV Magazine、MIT Tech Review</span></p>
+  </div>
+</div>
+
+</div><!-- end content -->
+
+<script>
+// Language Toggle
+function setLang(lang) {
+  document.querySelectorAll('.en').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+  document.querySelectorAll('.zh').forEach(el => el.style.display = lang === 'zh' ? '' : 'none');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+}
+
+// Tab Navigation
+function openTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// Region Filter (Global tab)
+function filterRegion(region) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.querySelectorAll('[data-region]').forEach(el => {
+    el.style.display = (region === 'all' || el.dataset.region === region) ? '' : 'none';
+  });
+}
+</script>
+
+</body>
+</html>
